@@ -1,8 +1,8 @@
-import PageSingleton from "./page-singleton.js";
+import fs from "fs";
+import process from "process";
 
-const getTorrentDetail = async (heading) => {
+const getTorrentDetail = async (page, heading) => {
   let result = "";
-  const page = await PageSingleton.initialize();
 
   const elementHandle = await page.evaluateHandle((heading) => {
     return [...document.querySelectorAll("strong")].find((el) =>
@@ -32,4 +32,35 @@ const getTorrentDetail = async (heading) => {
   return result;
 };
 
-export { getTorrentDetail };
+const getArgs = (key) => {
+  if (process.argv.includes(`--${key}`)) return true;
+  const value = process.argv.find((element) => element.startsWith(`--${key}=`));
+  if (!value) return null;
+  return value.replace(`--${key}=`, "");
+};
+
+const getMovieNames = (filePath) => {
+  try {
+    const movies = fs.readFileSync(filePath, "utf-8").split("\n");
+    return movies;
+  } catch (error) {
+    console.error("Error: ", error.message);
+    return [];
+  }
+};
+
+const saveToFile = (output, filePath, details) => {
+  const data =
+    output === "text" ? details.join("\n") : JSON.stringify(details, null, 2);
+
+  fs.writeFile(filePath, data, (err) => {
+    if (err) {
+      throw err;
+    }
+    console.log(
+      `Torrent details has been saved to: \x1b[33m${filePath}\x1b[0m`
+    );
+  });
+};
+
+export { getArgs, getMovieNames, getTorrentDetail, saveToFile };

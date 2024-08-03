@@ -1,9 +1,6 @@
-import PageSingleton from "./page-singleton.js";
 import { getTorrentDetail } from "./utils.js";
 
-const scraper = async (name, textOutput) => {
-  const page = await PageSingleton.initialize();
-
+const scraper = async (page, name, output) => {
   try {
     await page.goto(`https://www.1337x.to/sort-search/${name}/seeders/desc/1/`);
 
@@ -13,20 +10,20 @@ const scraper = async (name, textOutput) => {
     );
     await page.goto(torrentLink);
 
+    const title = await page.$eval("h1", (el) => el.textContent);
+    console.log(`Found torrent: \x1b[32m${title}\x1b[0m`);
     const magnetLink = await page.$eval(
       'a[href^="magnet:?xt=urn:btih:"]',
       (el) => el.href
     );
 
-    if (textOutput) return magnetLink;
+    if (output === "text") return magnetLink;
 
-    const title = await page.$eval("h1", (el) => el.textContent);
-    console.log(`Found torrent: ${title}`);
-    const totalSize = await getTorrentDetail("Total size");
-    const seeders = await getTorrentDetail("Seeders");
-    const leechers = await getTorrentDetail("Leechers");
-    const language = await getTorrentDetail("Language");
-    const uploadedBy = await getTorrentDetail("Uploaded By");
+    const totalSize = await getTorrentDetail(page, "Total size");
+    const seeders = await getTorrentDetail(page, "Seeders");
+    const leechers = await getTorrentDetail(page, "Leechers");
+    const language = await getTorrentDetail(page, "Language");
+    const uploadedBy = await getTorrentDetail(page, "Uploaded By");
 
     return {
       title,
