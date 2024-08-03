@@ -18,8 +18,8 @@ A simple CLI tool to search and download torrents from the command line. It uses
 
 ### Output formats
 
-- `--output=text`: The output is a text file with the magnet links.
-- `--output=json`: The output is a json file with the details of the torrents and magnet links.
+- `--output=json`: The output is a json file with the details of the torrents and magnet links. (Default)(Better for detailed information)
+- `--output=text`: The output is a text file with the magnet links. (Better for copy pasting in qBittorrent)
 
 ### Example
 
