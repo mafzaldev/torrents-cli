@@ -16,6 +16,16 @@ A simple CLI tool to search and download torrents from the command line. It uses
 4. Create a `movies.txt` file with the names of the movies.
 5. Run the command `node cli.js` and it will search for the torrents of the movies in the `movies.txt` file.
 
+### Movies file format
+
+The `movies.txt` file should contain the names of the movies to search for. Each movie should be in a new line. Use the following format for better and accurate results:
+
+```txt
+Inception (2010)
+The Dark Knight (2008)
+The Shawshank Redemption (1994)
+```
+
 ### Output formats
 
 - `--output=json`: The output is a json file with the details of the torrents and magnet links. (Default)(Better for detailed information)
