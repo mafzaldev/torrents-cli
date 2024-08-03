@@ -1,0 +1,13 @@
+{
+  "name": "torrents-cli",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^22.15.0"
+  }
+}
