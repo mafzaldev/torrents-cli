@@ -1,4 +1,4 @@
-name: Node.js Package deploy
+name: Publish
 on:
   push:
     branches: [main]
