@@ -1,6 +1,10 @@
 ## Torrents CLI
 
-A simple CLI tool to search and download torrents from the command line. It uses the Puppeteer library to scrape the web(1337x) for torrent links. The output can be a text file with the links or a torrent client to download the files or a json file with details of the torrents and magnet links.
+A simple CLI tool to search and download torrents from the command line.
+
+### Description
+
+It uses the Puppeteer library to scrape the web(1337x) for torrent links. The output can be a text file with the links or a torrent client to download the files or a json file with details of the torrents and magnet links.
 
 ### Dependencies
 
