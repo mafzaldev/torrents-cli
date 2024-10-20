@@ -13,7 +13,7 @@ jobs:
         with:
           node-version: 16
       - run: npm ci
-  publish-gpr:
+  publish:
     needs: build
     runs-on: ubuntu-latest
     steps:

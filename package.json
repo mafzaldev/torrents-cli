@@ -7,16 +7,21 @@
     "torrents-cli": "index.js"
   },
   "scripts": {},
-  "keywords": [
-    "torrents",
-    "cli",
-    "scraper"
-  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mafzaldev/torrents-cli.git"
+  },
+  "publishConfig": {},
   "author": "Muhammad Afzal",
   "license": "ISC",
   "dependencies": {
     "chalk": "^5.3.0",
     "ora": "^8.1.0",
     "puppeteer": "^22.15.0"
-  }
+  },
+  "keywords": [
+    "torrents",
+    "cli",
+    "scraper"
+  ]
 }
