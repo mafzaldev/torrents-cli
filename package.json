@@ -1,13 +1,22 @@
 {
   "name": "torrents-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
-  "main": "app.js",
+  "main": "index.js",
+  "bin": {
+    "torrents-cli": "./index.js"
+  },
   "scripts": {},
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "torrents",
+    "cli",
+    "scraper"
+  ],
+  "author": "Muhammad Afzal",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^5.3.0",
+    "ora": "^8.1.0",
     "puppeteer": "^22.15.0"
   }
 }

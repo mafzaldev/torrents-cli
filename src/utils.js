@@ -1,4 +1,7 @@
+import chalk from "chalk";
 import fs from "fs";
+import ora from "ora";
+import path from "path";
 import process from "process";
 
 const getTorrentDetail = async (page, heading) => {
@@ -39,7 +42,7 @@ const getArgs = (key) => {
   return value.replace(`--${key}=`, "");
 };
 
-const getMovieNames = (filePath) => {
+const getTorrentNames = (filePath) => {
   try {
     const movies = fs.readFileSync(filePath, "utf-8").split("\n");
     return movies;
@@ -49,18 +52,27 @@ const getMovieNames = (filePath) => {
   }
 };
 
-const saveToFile = (output, filePath, details) => {
-  const data =
+const saveToFile = (output, fileName, details) => {
+  const spinner = ora("Saving to file...").start();
+
+  const currentDir = process.cwd();
+  const filePath = path.join(currentDir, fileName);
+
+  const content =
     output === "text" ? details.join("\n") : JSON.stringify(details, null, 2);
 
-  fs.writeFile(filePath, data, (err) => {
-    if (err) {
-      throw err;
-    }
-    console.log(
-      `Torrent details has been saved to: \x1b[33m${filePath}\x1b[0m`
+  try {
+    fs.writeFileSync(filePath, content);
+    spinner.succeed(
+      ` Torrent details have been saved to: ${chalk.black.bgGreenBright(
+        filePath
+      )}`
     );
-  });
+  } catch (err) {
+    spinner.fail(`Error occurred while saving to file: ${err.message}`);
+  } finally {
+    spinner.stop();
+  }
 };
 
-export { getArgs, getMovieNames, getTorrentDetail, saveToFile };
+export { getArgs, getTorrentDetail, getTorrentNames, saveToFile };

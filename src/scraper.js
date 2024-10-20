@@ -1,6 +1,10 @@
+import chalk from "chalk";
+import ora from "ora";
 import { getTorrentDetail } from "./utils.js";
 
 const scraper = async (page, name, output) => {
+  const spinner = ora(`Fetching torrent: ${chalk.bgMagenta(name)}`).start();
+
   try {
     await page.goto(`https://www.1337x.to/sort-search/${name}/seeders/desc/1/`);
 
@@ -11,7 +15,10 @@ const scraper = async (page, name, output) => {
     await page.goto(torrentLink);
 
     const title = await page.$eval("h1", (el) => el.textContent);
-    console.log(`Found torrent: \x1b[32m${title}\x1b[0m`);
+
+    spinner.info(` Original torrent name: ${chalk.bgMagentaBright(name)}`);
+    spinner.succeed(` Found torrent: ${chalk.black.bgGreenBright(title)}`);
+
     const magnetLink = await page.$eval(
       'a[href^="magnet:?xt=urn:btih:"]',
       (el) => el.href
@@ -35,7 +42,7 @@ const scraper = async (page, name, output) => {
       uploadedBy,
     };
   } catch (error) {
-    console.error(`Error occurred while scraping ${name}: `, error.message);
+    spinner.fail(`Error occurred while scraping ${name}: ` + error.message);
     return null;
   }
 };
