@@ -1,6 +1,6 @@
 ## Torrents CLI
 
-A simple CLI tool to search and download torrents from the command line.
+A simple CLI to scrap torrent magnet links from the command line.
 
 ### Description
 
@@ -14,11 +14,9 @@ It uses the Puppeteer library to scrape the web(1337x) for torrent links. The ou
 
 ### How to use
 
-1. Clone the repository `git clone https://github.com/mafzaldev/torrents-cli`
-2. Move to the directory using the terminal `cd torrents-cli`
-3. Install the dependencies `pnpm install`
+3. Install the package `npm i torrents-cli`
 4. Create a `movies.txt` file with the names of the movies.
-5. Run the command `node cli.js` and it will search for the torrents of the movies in the `movies.txt` file.
+5. Run the command `torrents-cli --<options>` in the terminal. See the options below.
 
 ### Movies file format
 
@@ -38,5 +36,5 @@ The Shawshank Redemption (1994)
 ### Example
 
 ```bash
-$ node cli.js --output=text
+$ torrents-cli --output=text
 ```
