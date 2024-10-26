@@ -14,14 +14,16 @@ It uses the Puppeteer library to scrape the web(1337x) for torrent links. The ou
 
 ### How to use
 
-3. Install the package globally `npm install -g torrents-cli`
-4. Create a `movies.txt` file with the names of the movies.
-5. Run the command `torrents-cli --<output-format>` in the terminal. See the options below.
+1. Install the package globally `npm install -g torrents-cli`
+2. Create a file with any name let's say `movies.txt` with the names of the movies.
+3. Run the command `torrents-cli --input=movies.txt -<output-format>` in the terminal. See the options below.
 
-### Output formats
+### CLI Options
 
-- `--output=json`: The output is a json file with the details of the torrents and magnet links. (Default)(Better for detailed information)
-- `--output=text`: The output is a text file with the magnet links. (Better for copy pasting in qBittorrent)
+- `--input=`: (Required) The file containing the names of the movies to search for.
+- `--output=`: (Optional) The file name without any extension to save the output.
+- `-json or -j`: (Default) The output is a json file with the details of the torrents and magnet links. (Better for detailed information)
+- `-text or -t`: The output is a text file with the magnet links. (Better for copy pasting in qBittorrent)
 
 ### Movies file format
 
@@ -31,10 +33,4 @@ The `movies.txt` file should contain the names of the movies to search for. Each
 Inception (2010)
 The Dark Knight (2008)
 The Shawshank Redemption (1994)
-```
-
-### Example
-
-```bash
-$ torrents-cli --output=text
 ```
