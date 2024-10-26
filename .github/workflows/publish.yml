@@ -1,9 +1,7 @@
 name: Publish
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: [release]
 jobs:
   build:
     runs-on: ubuntu-latest
