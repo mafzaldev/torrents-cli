@@ -6,10 +6,7 @@ const main = async (inputFile, outputFile, outputType) => {
   console.log("-----------------------------");
 
   const torrentDetails = [];
-  const INPUT_FILE_PATH = "movies.txt";
-  const JSON_FILE_PATH = "torrents.json";
-  const TEXT_FILE_PATH = "torrents.txt";
-  const movies = getTorrentNames(INPUT_FILE_PATH);
+  const movies = getTorrentNames(inputFile);
 
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
