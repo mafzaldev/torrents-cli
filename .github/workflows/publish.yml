@@ -1,6 +1,6 @@
 name: Publish on NPM
 on:
-  push:
+  pull-request:
     branches: [release]
 jobs:
   build:
