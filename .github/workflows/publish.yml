@@ -1,6 +1,7 @@
 name: Publish on NPM
 on:
   pull_request:
+    types: [closed]
     branches: [release]
 jobs:
   build:
