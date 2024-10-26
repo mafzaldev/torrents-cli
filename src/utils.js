@@ -35,13 +35,6 @@ const getTorrentDetail = async (page, heading) => {
   return result;
 };
 
-const getArgs = (key) => {
-  if (process.argv.includes(`--${key}`)) return true;
-  const value = process.argv.find((element) => element.startsWith(`--${key}=`));
-  if (!value) return null;
-  return value.replace(`--${key}=`, "");
-};
-
 const getTorrentNames = (filePath) => {
   try {
     const movies = fs.readFileSync(filePath, "utf-8").split("\n");
@@ -59,7 +52,7 @@ const saveToFile = (output, fileName, details) => {
   const filePath = path.join(currentDir, fileName);
 
   const content =
-    output === "text" ? details.join("\n") : JSON.stringify(details, null, 2);
+    output === "txt" ? details.join("\n") : JSON.stringify(details, null, 2);
 
   try {
     fs.writeFileSync(filePath, content);
@@ -75,4 +68,4 @@ const saveToFile = (output, fileName, details) => {
   }
 };
 
-export { getArgs, getTorrentDetail, getTorrentNames, saveToFile };
+export { getTorrentDetail, getTorrentNames, saveToFile };

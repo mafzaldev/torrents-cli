@@ -2,7 +2,7 @@ import puppeteer from "puppeteer";
 import scraper from "./scraper.js";
 import { getTorrentNames, saveToFile } from "./utils.js";
 
-const cli = async (output) => {
+const main = async (inputFile, outputFile, outputType) => {
   console.log("-----------------------------");
 
   const torrentDetails = [];
@@ -15,7 +15,7 @@ const cli = async (output) => {
   const page = await browser.newPage();
 
   for (const movie of movies) {
-    const details = await scraper(page, movie, output);
+    const details = await scraper(page, movie, outputType);
     if (details) {
       torrentDetails.push(details);
     }
@@ -26,11 +26,7 @@ const cli = async (output) => {
 
   if (torrentDetails.length === 0) return console.log("No torrents found!");
 
-  saveToFile(
-    output,
-    output === "text" ? TEXT_FILE_PATH : JSON_FILE_PATH,
-    torrentDetails
-  );
+  saveToFile(outputType, outputFile, torrentDetails);
 };
 
-export default cli;
+export default main;

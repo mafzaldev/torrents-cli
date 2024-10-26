@@ -1,3 +1,5 @@
 node_modules
 torrents.json
 torrents.txt
+scrapped-torrents.json
+movies.txt

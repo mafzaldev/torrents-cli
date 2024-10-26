@@ -2,7 +2,7 @@ import chalk from "chalk";
 import ora from "ora";
 import { getTorrentDetail } from "./utils.js";
 
-const scraper = async (page, name, output) => {
+const scraper = async (page, name, outputType) => {
   const spinner = ora(`Fetching torrent: ${chalk.bgMagenta(name)}`).start();
 
   try {
@@ -24,7 +24,7 @@ const scraper = async (page, name, output) => {
       (el) => el.href
     );
 
-    if (output === "text") return magnetLink;
+    if (outputType === "txt") return magnetLink;
 
     const totalSize = await getTorrentDetail(page, "Total size");
     const seeders = await getTorrentDetail(page, "Seeders");

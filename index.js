@@ -1,11 +1,34 @@
 #!/usr/bin/env node
 
-import cli from "./src/cli.js";
-import { getArgs } from "./src/utils.js";
-
+import meow from "meow";
+import main from "./src/main.js";
 (() => {
-  let output = getArgs("output");
-  if (!output || !["json", "text"].includes(output)) output = "json";
+  const cli = meow({
+    importMeta: import.meta,
+    flags: {
+      input: {
+        type: "string",
+        isRequired: true,
+      },
+      output: {
+        type: "string",
+        isRequired: false,
+      },
+      json: {
+        type: "boolean",
+        shortFlag: "j",
+        isRequired: false,
+      },
+      text: {
+        type: "boolean",
+        shortFlag: "t",
+        isRequired: false,
+      },
+    },
+  });
 
-  cli(output);
+  const { input, output = "torrents", json, text } = cli.flags;
+  let outputType = json || text ? "txt" : "json";
+
+  main(input, `scrapped-${output}.${outputType}`, outputType);
 })();
