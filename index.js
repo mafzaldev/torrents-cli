@@ -2,6 +2,7 @@
 
 import meow from "meow";
 import main from "./src/main.js";
+
 (() => {
   const cli = meow({
     importMeta: import.meta,
@@ -27,8 +28,14 @@ import main from "./src/main.js";
     },
   });
 
-  const { input, output = "torrents", json, text } = cli.flags;
-  let outputType = json || text ? "txt" : "json";
+  const { input, output = "torrents", text } = cli.flags;
+  let outputType = "";
+
+  if (text) {
+    outputType = "txt";
+  } else {
+    outputType = "json";
+  }
 
   main(input, `scrapped-${output}.${outputType}`, outputType);
 })();
