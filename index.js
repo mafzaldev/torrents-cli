@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
+import chalk from "chalk";
 import meow from "meow";
-import main from "./src/main.js";
+import scraper from "./src/scraper.js";
 
 (() => {
   const cli = meow({
@@ -15,27 +16,26 @@ import main from "./src/main.js";
         type: "string",
         isRequired: false,
       },
-      json: {
-        type: "boolean",
-        shortFlag: "j",
-        isRequired: false,
-      },
-      text: {
-        type: "boolean",
-        shortFlag: "t",
-        isRequired: false,
-      },
     },
   });
 
-  const { input, output = "torrents", text } = cli.flags;
-  let outputType = "";
+  const { input, output = "torrents.json" } = cli.flags;
+  let outputFile = output.split(".")[0];
+  let outputType = output.split(".")[1];
 
-  if (text) {
-    outputType = "txt";
-  } else {
+  console.log("-----------------------------");
+
+  if (input === "") {
+    return console.log(
+      `Empty ${chalk.bgRed(
+        "--input"
+      )} flag. Please type input file name and retry.`
+    );
+  }
+
+  if (outputType === undefined) {
     outputType = "json";
   }
 
-  main(input, `scrapped-${output}.${outputType}`, outputType);
+  scraper(input, `scrapped-${outputFile}.${outputType}`, outputType);
 })();
