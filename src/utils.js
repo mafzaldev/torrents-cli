@@ -37,8 +37,8 @@ const getTorrentDetail = async (page, heading) => {
 
 const getTorrentNames = (filePath) => {
   try {
-    const movies = fs.readFileSync(filePath, "utf-8").split("\n");
-    return movies;
+    const torrents = fs.readFileSync(filePath, "utf-8").split("\n");
+    return torrents;
   } catch (error) {
     console.error("Error: ", error.message);
     return [];
