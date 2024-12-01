@@ -20,10 +20,10 @@ It uses the Puppeteer library to scrape the web(1337x) for torrent links. The ou
 
 ### CLI Options
 
-| Option     | Required | Description                                                                                    |
-| ---------- | -------- | ---------------------------------------------------------------------------------------------- |
-| `--input`  | Yes      | The path to the file containing the list of items to search for.                               |
-| `--output` | No       | The name of the output file (with or without extension). Defaults to `scrapped-torrents.json`. |
+| Option            | Required | Description                                                                                    |
+| ----------------- | -------- | ---------------------------------------------------------------------------------------------- |
+| `--input`         | Yes      | The path to the file containing the list of items to search for.                               |
+| `--output` &nbsp; | No       | The name of the output file (with or without extension). Defaults to `scrapped-torrents.json`. |
 
 #### Output Formats
 
