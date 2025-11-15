@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import ora from "ora";
 import puppeteer from "puppeteer";
-import { getTorrentDetail, getTorrentNames, saveToFile } from "./utils.js";
+import { calculateSimilarity, getTorrentDetail, getTorrentNames, saveToFile } from "./utils.js";
 
 const scraper = async (inputFile, outputFile, outputType) => {
   const torrentDetails = [];
@@ -39,16 +39,50 @@ const scrapeTorrent = async (page, name, outputType) => {
   try {
     await page.goto(`https://www.1337x.to/sort-search/${name}/seeders/desc/1/`);
 
-    const torrentLink = await page.$eval(
-      'a[href^="/torrent/"]',
-      (el) => el.href
-    );
-    await page.goto(torrentLink);
+    // Get multiple torrent links and their titles from search results
+    const torrents = await page.evaluate(() => {
+      const results = [];
+      const torrentElements = document.querySelectorAll('a[href^="/torrent/"]');
+      
+      // Get up to 10 results for comparison
+      for (let i = 0; i < Math.min(torrentElements.length, 10); i++) {
+        const link = torrentElements[i];
+        const title = link.textContent.trim();
+        const href = link.href;
+        
+        // Only add unique links (skip duplicates)
+        if (!results.some(r => r.href === href)) {
+          results.push({ title, href });
+        }
+      }
+      
+      return results;
+    });
+
+    if (torrents.length === 0) {
+      spinner.fail(` No torrents found for: ${name}`);
+      return null;
+    }
+
+    // Find the best matching torrent based on title similarity
+    let bestMatch = torrents[0];
+    let bestScore = calculateSimilarity(name, torrents[0].title);
+
+    for (let i = 1; i < torrents.length; i++) {
+      const score = calculateSimilarity(name, torrents[i].title);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = torrents[i];
+      }
+    }
+
+    // Navigate to the best matching torrent
+    await page.goto(bestMatch.href);
 
     const title = await page.$eval("h1", (el) => el.textContent);
 
     spinner.info(` Original torrent name: ${chalk.bgMagentaBright(name)}`);
-    spinner.succeed(` Found torrent: ${chalk.black.bgGreenBright(title)}`);
+    spinner.succeed(` Found torrent: ${chalk.black.bgGreenBright(title)} (match score: ${(bestScore * 100).toFixed(1)}%)`);
 
     const magnetLink = await page.$eval(
       'a[href^="magnet:?xt=urn:btih:"]',
